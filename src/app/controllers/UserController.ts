@@ -20,10 +20,13 @@ class UserController {
       };
 
       const user = repository.create({ email, password });
-      console.log(user)
       await repository.save(user);
 
-      return res.json({user});
+      delete user.password;
+      delete user.password_reset_expires;
+      delete user.password_reset_token;
+
+      return res.json(user);
     } catch(err) {
       return res.status(400).json({error: "Registration failed"});
     }

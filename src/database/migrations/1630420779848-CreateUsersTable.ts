@@ -14,11 +14,21 @@ export class CreateUsersTable1630420779848 implements MigrationInterface {
                 },
                 {
                   name: 'email',
-                  type: 'varchar'
+                  type: 'varchar',
                 },
                 {
                   name: 'password',
                   type: 'varchar'
+                },
+                {
+                  name: "password_reset_token",
+                  type: "varchar",
+                  isNullable: true
+                },
+                {
+                  name: "password_reset_expires",
+                  type: "timestamp",
+                  isNullable: true
                 },
                 {
                   name: 'created_at',
