@@ -1,10 +1,20 @@
 import { Router } from "express";
+
+import { authMiddleware } from "../app/middlewares/authMiddleware";
+
+import { UserController } from "../app/controllers/UserController";
 import { AuthController } from "../app/controllers/AuthController";
+import { AppController } from "../app/controllers/AppController";
 
-const routes = Router();
+const router = Router();
 
-const authController = new AuthController()
+const userController = new UserController();
+const authController = new AuthController();
+const appController = new AppController();
 
-routes.get("/register", authController.register);
+router.post("/register", userController.store);
+router.post("/login", authController.authenticate);
 
-export default routes;
+router.get("/app", authMiddleware, appController.index);
+
+export default router;
