@@ -1,27 +1,32 @@
-import request from "supertest";
-import { app } from "../../app";
+import request from "supertest"
 import { getConnection } from "typeorm";
-import { User } from "../../app/models/User";
-import { getRepository } from "typeorm";
+import { app } from "../../app"
 
 import createConnection from "../../database"
 
-describe('First', () => {
-  beforeAll(async () => {
-    const connection = await createConnection();
-    await connection.runMigrations();
+describe('User tests', () => {
+  beforeAll( async () => {
+    const connection = await createConnection()
+    // await connection.runMigrations()
   });
 
   afterAll( async () => {
-    const connection = getConnection();
+   /*  const connection = getConnection();
     await connection.dropDatabase();
-    await connection.close();
-    
+    await connection.close(); */
   });
 
-  it ("test", async () => {
-    expect(2 + 2).toBe(4)
-  })
+  it ("Create user", async () => {
+    const response = await request(app).post('/register').send({
+      email: "julio@gmail.com",
+      password: "senha",
+      confirm_password: "senha",
+    });
+ 
+    console.log(response)
+    expect(response.status).toBe(201);
+    expect(201).toBe(201);
+  });
 });
 
 /* describe("## Authentication ##", () => {
