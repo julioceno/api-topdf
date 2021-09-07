@@ -1,3 +1,9 @@
-import { createConnection } from "typeorm";
+import { Connection, createConnection } from "typeorm";
+const dbConfig = require("../config/database")
 
-createConnection().then(() => console.log("📜️ Successfully connected with database"));
+export default async (): Promise<Connection> => {
+    return createConnection(
+        dbConfig
+
+    );
+};

@@ -1,10 +1,13 @@
+require("dotenv").config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
+});
+
 import "reflect-metadata";
-import "dotenv/config";
 import express from "express";
-
-import "./database/index"
 import router from "./routes";
+import createConnection from "./database"
 
+createConnection()
 const app = express();
 
 app.use(express.json());

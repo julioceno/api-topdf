@@ -7,8 +7,8 @@
     "build": "tsc",
     "start": "node --files dist/server.js",
     "dev": "ts-node-dev --inspect --ignore-watch node_modules --files src/server.ts",
-    "test": "jest",
-    "typeorm": "npx ts-node ./node_modules/typeorm/cli.js"
+    "typeorm": "npx ts-node ./node_modules/typeorm/cli.js",
+    "test": "NODE_ENV=test jest"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.15.0",
@@ -20,6 +20,7 @@
     "nodemailer": "^6.6.3",
     "nodemailer-express-handlebars": "^4.0.0",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
     "typeorm": "^0.2.37",
     "uuid": "^8.3.2"
   },
@@ -39,6 +40,7 @@
     "babel-jest": "^27.1.0",
     "jest": "^27.1.0",
     "supertest": "^6.1.6",
+    "ts-jest": "^27.0.5",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.11.0",
     "typescript": "^4.4.2"
