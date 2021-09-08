@@ -11,6 +11,10 @@ export default async (): Promise<Connection> => {
             database: process.env.NODE_ENV === "test"
             ? "./src/database/database.test.sqlite"
             : dbConfig.database,
+            
+            migrationsRun: process.env.NODE_ENV === "test"
+            ? false
+            : dbConfig.database,
         })
     );
 };

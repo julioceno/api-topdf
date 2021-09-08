@@ -3,7 +3,8 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 export class CreateUsersTable1630420779848 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.createTable( new Table({
+        await queryRunner.createTable( 
+          new Table({
             name: "users",
             columns: [
                 {
@@ -30,16 +31,16 @@ export class CreateUsersTable1630420779848 implements MigrationInterface {
                   type: "timestamp",
                   isNullable: true
                 },
-                {
+              /*   {
                   name: 'created_at',
                   type: 'timestamp',
-                  default: 'now()',
+                  default: "now()"
                 },
                 {
                   name: 'updated_at',
                   type: 'timestamp',
                   default: 'now()',
-                },
+                }, */
             ]
         }));
     }

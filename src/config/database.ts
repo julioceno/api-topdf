@@ -18,12 +18,10 @@ module.exports = {
     timestamps: true,
     underscored: true
   },
-  entities: [
-     "./src/app/models/*.ts"
-  ],
+  entities: ["./src/app/models/*.ts"],
   migrations: [
-     "./src/database/migrations/*.ts"
-  ],
+    "./src/database/migrations/*.ts"
+ ],
   cli: {
     migrationsDir: "./src/database/migrations"
   }

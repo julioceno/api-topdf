@@ -23,8 +23,7 @@ class User {
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    console.log("Encriptando ")
-    this.password = bcrypt.hashSync(this.password, 10)
+    this.password = bcrypt.hashSync(this.password, 8)
   };
 
   constructor() {

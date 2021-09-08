@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
+import { getRepository } from "typeorm";
+
+import { User } from "../models/User";
 
 class AppController {
   async index(req: Request, res: Response) {
-    console.log(req.userId)
-    
-    return res.status(200).json({ userID: req.userId });
+    return res.status(200).json({ message: "ok" });
   };
 };
 

@@ -1,20 +1,20 @@
 {
-   "type": "mysql",
-  "host": "localhost",
-  "username": "julio",
-  "password": "julio123",
-  "database": "to_pdf",
-   "define": {
-      "timestamps": true,
-      "underscored": true
-   },
-  "entities": [
-     "./src/app/models/*.ts"
-  ],
-  "migrations": [
-     "./src/database/migrations/*.ts"
-  ],
-  "cli": {
-    "migrationsDir": "./src/database/migrations"
-  }
+  "type": "mysql",
+ "host": "localhost",
+ "username": "julio",
+ "password": "julio123",
+ "database": "to_pdf",
+  "define": {
+     "timestamps": true,
+     "underscored": true
+  },
+ "entities": [
+    "./src/app/models/*.ts"
+ ],
+ "migrations": [
+    "./src/database/migrations/*.ts"
+ ],
+ "cli": {
+   "migrationsDir": "./src/database/migrations"
+ }
 }
