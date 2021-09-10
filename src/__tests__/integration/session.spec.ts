@@ -16,13 +16,11 @@ describe('Session', () => {
 
   afterAll( async () => {
     const connection = getConnection();
-    await connection.dropDatabase();
+    await connection.dropDatabase()
     await connection.close(); 
   });
 
   it ("Create user for router /register", async () => {
-  
-
     const response = await request(app).post("/register").send({
       email: "julio@gmail.com",
       password: "senha", 
@@ -59,6 +57,15 @@ describe('Session', () => {
     });
 
     expect(response.status).toBe(200)
+  }); 
+
+  it ("Login user not found", async () => {
+    const response = await request(app).post("/login").send({
+      email: "julio2@gmail.com",
+      password: "senha", 
+    });
+
+    expect(response.status).toBe(401)
   }); 
 
   it ("Login credentials incorrect", async () => {
@@ -105,7 +112,7 @@ describe('Session', () => {
       expect(response.status).toBe(401)
   });
 
-  it ("Não deve ser capaz de acessar rotas privadas quando o token não tiver duas partes", async () => {
+  it ("Should not be able to access private calls when token is not two-part", async () => {
     const response = await request(app)
       .get("/app")
       .set("Authorization", `Bearer `)
@@ -123,5 +130,152 @@ describe('Session', () => {
 
       expect(response.status).toBe(401)
   });
+
+  it ("Should able for to recover forgot password", async () => {
+    const response = await request(app)
+      .post("/forgot_password")
+      .send({
+        email: "julio@gmail.com"
+      });
+
+      expect(response.status).toBe(200);
+  });
+
+  it ("Should not able for to recover forgot password", async () => {
+    const response = await request(app)
+      .post("/forgot_password")
+      .send({
+        email: "julio2@gmail.com"
+      });
+
+      expect(response.status).toBe(401);
+  });
+
+  it ("Should be able for to update email", async () => {
+    const repository = getRepository(User);
+    const user = await repository.findOne({ where: { email: "julio@gmail.com" } })
+    
+    const response = await request(app)
+    .put("/update")
+    .send({
+      email: "julionovo@gmail.com",
+      password_confirmation: "senha"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`)
+    
+    expect(response.status).toBe(200)
+  });
+
+  it ("Should be able for to update password", async () => {
+    const repository = getRepository(User);
+    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+
+    const response = await request(app)
+    .put("/update")
+    .send({
+      password: "novasenha",
+      password_confirmation: "senha"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`)
+    
+    expect(response.status).toBe(200)
+  })
+
+  it ("Should not be able for to update, user invalid", async () => {
+    const response = await request(app)
+    .put("/update")
+    .send({
+      password: "novasenha",
+      password_confirmation: "senha"
+    })
+    .set("Authorization", `Bearer eyJhbGciOiJIUzI1NiJ9.Y2JmMTJlNjYtYjY3YS00OGIwLWJjZDgtMTQ5MDYwNjAzMGMx.k6wwNzWsM41T3KpG94n5iOOQN5dJeYXSLiCFcDRzgzU`);
+
+    expect(response.status).toBe(409)
+  });
+
+  it ("Should not be able for to update, new email or password undefined", async () => {
+    const repository = getRepository(User);
+    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+
+    const response = await request(app)
+    .put("/update")
+    .send({
+      password_confirmation: "senha"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`)
+    
+    expect(response.status).toBe(400)
+  });
   
+  it ("Should not be able for to update, password confirmation undefined", async () => {
+    const repository = getRepository(User);
+    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+
+    const response = await request(app)
+    .put("/update")
+    .send({
+      email: "email@gmail.com",
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`);
+
+    expect(response.status).toBe(400)
+  });
+
+
+  it ("Should not be able for to update, password confirmation invalid", async () => {
+    const repository = getRepository(User);
+    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+
+    const response = await request(app)
+    .put("/update")
+    .send({
+      email: "email@gmail.com",
+      password_confirmation: "123"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`);
+
+    expect(response.status).toBe(400);
+  });
+
+  it ("Login user new credentials", async () => {
+    const response = await request(app).post("/login").send({
+      email: "julionovo@gmail.com",
+      password: "novasenha", 
+    });
+
+    expect(response.status).toBe(200);
+  }); 
+
+  it ("Login user, old email", async () => {
+    const response = await request(app).post("/login").send({
+      email: "julio@gmail.com",
+      password: "senha", 
+    });
+
+    expect(response.status).toBe(401);
+  }); 
+
+  it ("Login user, old password", async () => {
+    const response = await request(app).post("/login").send({
+      email: "julionovo@gmail.com",
+      password: "senha", 
+    });
+
+    expect(response.status).toBe(401);
+  }); 
+
+  it ("Delete user", async () => {
+    const repository = getRepository(User);
+    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+
+    const response = await request(app)
+    .delete("/delete")
+    .send({
+      password_confirmation: "novasenha"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`);
+
+    expect(response.status).toBe(200);
+  });
+
 });

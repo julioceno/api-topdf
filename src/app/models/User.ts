@@ -25,12 +25,11 @@ class User {
   hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8)
   };
-
-  constructor() {
-    if (this.id) {
-      this.id = uuid()
-    }
-  }
+  
+  @BeforeInsert()
+  hashId() {
+    this.id = uuid()
+  };
 }
 
 export { User };

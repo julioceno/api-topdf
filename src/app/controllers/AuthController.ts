@@ -12,7 +12,7 @@ class AuthController {
     const repository = getRepository(User);
 
     try {
-      const user = await repository.findOne({ email });
+      const user = await repository.findOne({ where: { email } });
   
       if (!user) {
         return res.status(401).json({ error: "User not exists" });
@@ -39,12 +39,12 @@ class AuthController {
   async forgotPassword(req: Request, res: Response) {
     const { email } = req.body;
     const repository = getRepository(User);
- 
+   
     try {
       const user = await repository.findOne({ email });
       
       if (!user) {
-        return res.status(400).json({ error: "User not found" });
+        return res.status(401).json({ error: "User not found" });
       }; 
 
       let code;
@@ -89,14 +89,14 @@ class AuthController {
       const user = await repository.findOne({ email });
 
       if (!user) {
-        return res.status(200).send({ error: "User not found"});
+        return res.status(400).send({ error: "User not found"});
       };
     
       const isValidPassword = await bcrypt.compare(password, user.password);
       if (isValidPassword) {
-        return res.status(200).send({ error: "Your new password must be different from the old one"});
+        return res.status(400).send({ error: "Your new password must be different from the old one"});
       };
-
+     
       if (code !== user.password_reset_token) {
         return res.status(400).json({ error: "Code invalid" });
       };

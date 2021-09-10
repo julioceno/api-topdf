@@ -5,7 +5,7 @@ import { User } from "../models/User";
 
 class AppController {
   async index(req: Request, res: Response) {
-    return res.status(200).json({ message: "ok" });
+    return res.status(200).json({ message: req.userId });
   };
 };
 
