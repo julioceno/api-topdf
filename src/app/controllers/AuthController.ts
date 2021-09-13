@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
-import { getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import bcrypt from "bcryptjs";
 
-import { User } from "../models/User";
+import { UserRepository } from '../repositories/UserRepository';
 import { tokenGenerate } from "../functions/tokenGenerate";
 import { transport } from "../../resources/mailer"
 
 class AuthController {
   async authenticate(req: Request, res: Response) {
     const { email, password } = req.body;
-    const repository = getRepository(User);
+    const userRepository = getCustomRepository(UserRepository);
 
     try {
-      const user = await repository.findOne({ where: { email } });
+      const user = await userRepository.findOne({ where: { email } });
   
       if (!user) {
         return res.status(401).json({ error: "User not exists" });
@@ -38,10 +38,10 @@ class AuthController {
   };
   async forgotPassword(req: Request, res: Response) {
     const { email } = req.body;
-    const repository = getRepository(User);
+    const userRepository = getCustomRepository(UserRepository);
    
     try {
-      const user = await repository.findOne({ email });
+      const user = await userRepository.findOne({ email });
       
       if (!user) {
         return res.status(401).json({ error: "User not found" });
@@ -55,7 +55,7 @@ class AuthController {
       const now = new Date();
       now.setHours(now.getHours() + 1);
 
-      await repository.update( user.id, { 
+      await userRepository.update( user.id, { 
         password_reset_token: code,
         password_reset_expires: now,
       });
@@ -83,10 +83,10 @@ class AuthController {
 
   async resetPassword(req: Request, res: Response) {
     const { email, code, password } = req.body;
-    const repository = getRepository(User);
+    const userRepository = getCustomRepository(UserRepository);
 
     try {
-      const user = await repository.findOne({ email });
+      const user = await userRepository.findOne({ email });
 
       if (!user) {
         return res.status(400).send({ error: "User not found"});
@@ -109,11 +109,11 @@ class AuthController {
 
       /* Atualmente o unico jeito de acionar o hook do typeorm de update é salvando novamente o usuário */
       user.password = password;
-      await repository.save(user); 
+      await userRepository.save(user); 
 
       /* Aqui eu deixo nulo o tempo de reset do token e deixo nulo o proprio token, não faço isso com query  
       anterior pois daria um erro de tipos do typescript. */
-      await repository.update(user.id, {
+      await userRepository.update(user.id, {
         password_reset_expires: null,
         password_reset_token: null
       });

@@ -1,8 +1,9 @@
 import request from "supertest"
-import { getConnection, getRepository } from "typeorm";
+import { getConnection, getCustomRepository } from "typeorm";
+
 import bcrypt from "bcryptjs";
 
-import { User } from "../../app/models/User";
+import { UserRepository } from "../../app/repositories/UserRepository";
 import createConnection from "../../database"
 
 describe('User', () => {
@@ -18,10 +19,10 @@ describe('User', () => {
   });
 
   it ("Should encrypt user password", async () => {
-    const repository = getRepository(User);
+    const userRepository = getCustomRepository(UserRepository);
 
-    const user = repository.create({ email: "julio3", password: "senha" }) 
-    const userAlreadyExists = await repository.save(user);
+    const user = userRepository.create({ email: "julio3", password: "senha" }) 
+    const userAlreadyExists = await userRepository.save(user);
     
     const isValidPassword = await bcrypt.compare("senha", userAlreadyExists.password);
 

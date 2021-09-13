@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate,  } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, CreateDateColumn, UpdateDateColumn  } from "typeorm";
 import { v4 as uuid } from "uuid";
 
 import bcrypt from "bcryptjs";
@@ -19,6 +19,12 @@ class User {
 
   @Column()
   password_reset_expires: Date;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn() 
+  updated_at: Date;
 
   @BeforeInsert()
   @BeforeUpdate()

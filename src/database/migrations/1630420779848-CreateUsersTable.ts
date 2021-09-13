@@ -31,7 +31,7 @@ export class CreateUsersTable1630420779848 implements MigrationInterface {
                   type: "timestamp",
                   isNullable: true
                 },
-              /*   {
+                {
                   name: 'created_at',
                   type: 'timestamp',
                   default: "now()"
@@ -40,7 +40,7 @@ export class CreateUsersTable1630420779848 implements MigrationInterface {
                   name: 'updated_at',
                   type: 'timestamp',
                   default: 'now()',
-                }, */
+                },
             ]
         }));
     }

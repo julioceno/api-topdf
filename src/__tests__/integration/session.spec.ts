@@ -1,11 +1,9 @@
 import request from "supertest"
-import { getConnection } from "typeorm";
+import { getConnection, getCustomRepository } from "typeorm";
 import { app } from "../../app"
+
 import { tokenGenerate } from "../../app/functions/tokenGenerate"
-import { getRepository } from "typeorm";
-
-import { User } from "../../app/models/User";
-
+import { UserRepository } from "../../app/repositories/UserRepository";
 import createConnection from "../../database"
 
 describe('Session', () => {
@@ -87,8 +85,8 @@ describe('Session', () => {
   });
 
   it ("Should be able to access private routes when authenticated", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julio@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julio@gmail.com" } })
 
     const response = await request(app)
       .get("/app")
@@ -121,8 +119,8 @@ describe('Session', () => {
   });
 
   it ("Should not able to access private routes when token malformed", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julio@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julio@gmail.com" } })
 
     const response = await request(app)
       .get("/app")
@@ -152,11 +150,11 @@ describe('Session', () => {
   });
 
   it ("Should be able for to update email", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julio@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julio@gmail.com" } })
     
     const response = await request(app)
-    .put("/update")
+    .put("/update_user")
     .send({
       email: "julionovo@gmail.com",
       password_confirmation: "senha"
@@ -167,11 +165,11 @@ describe('Session', () => {
   });
 
   it ("Should be able for to update password", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julionovo@gmail.com" } })
 
     const response = await request(app)
-    .put("/update")
+    .put("/update_user")
     .send({
       password: "novasenha",
       password_confirmation: "senha"
@@ -183,7 +181,7 @@ describe('Session', () => {
 
   it ("Should not be able for to update, user invalid", async () => {
     const response = await request(app)
-    .put("/update")
+    .put("/update_user")
     .send({
       password: "novasenha",
       password_confirmation: "senha"
@@ -194,11 +192,11 @@ describe('Session', () => {
   });
 
   it ("Should not be able for to update, new email or password undefined", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julionovo@gmail.com" } })
 
     const response = await request(app)
-    .put("/update")
+    .put("/update_user")
     .send({
       password_confirmation: "senha"
     })
@@ -208,11 +206,11 @@ describe('Session', () => {
   });
   
   it ("Should not be able for to update, password confirmation undefined", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julionovo@gmail.com" } })
 
     const response = await request(app)
-    .put("/update")
+    .put("/update_user")
     .send({
       email: "email@gmail.com",
     })
@@ -223,11 +221,11 @@ describe('Session', () => {
 
 
   it ("Should not be able for to update, password confirmation invalid", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julionovo@gmail.com" } })
 
     const response = await request(app)
-    .put("/update")
+    .put("/update_user")
     .send({
       email: "email@gmail.com",
       password_confirmation: "123"
@@ -264,14 +262,65 @@ describe('Session', () => {
     expect(response.status).toBe(401);
   }); 
 
-  it ("Delete user", async () => {
-    const repository = getRepository(User);
-    const user = await repository.findOne({ where: { email: "julionovo@gmail.com" } })
+  it ("Should be able delete user", async () => {
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julionovo@gmail.com" } })
 
     const response = await request(app)
-    .delete("/delete")
+    .delete("/delete_user")
     .send({
       password_confirmation: "novasenha"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`);
+
+    expect(response.status).toBe(200);
+  });
+
+  it ("Should be able to create a new user for testing the /delete_user route", async () => {
+    const response = await request(app).post("/register").send({
+      email: "julio2@gmail.com",
+      password: "senha", 
+      confirm_password: "senha", 
+    });
+
+    expect(response.status).toBe(201)
+  });
+
+  it ("Should not be able delete user, password confirmation undefined", async () => {
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julio2@gmail.com" } })
+
+    const response = await request(app)
+    .delete("/delete_user")
+    .send({
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`);
+
+    expect(response.status).toBe(400);
+  });
+
+  it ("Should not be able delete user, password confirmation invalid", async () => {
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julio2@gmail.com" } })
+
+    const response = await request(app)
+    .delete("/delete_user")
+    .send({
+      password_confirmation: "123"
+    })
+    .set("Authorization", `Bearer ${tokenGenerate(user)}`);
+
+    expect(response.status).toBe(400);
+  });
+
+  it ("Should be able delete user", async () => {
+    const userRepository = getCustomRepository(UserRepository);
+    const user = await userRepository.findOne({ where: { email: "julio2@gmail.com" } })
+
+    const response = await request(app)
+    .delete("/delete_user")
+    .send({
+      password_confirmation: "senha"
     })
     .set("Authorization", `Bearer ${tokenGenerate(user)}`);
 
