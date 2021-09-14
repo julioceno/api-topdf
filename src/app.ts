@@ -8,7 +8,7 @@ dotenv.config({
   path: process.env.NODE_ENV === "test" ? ".env.test" : ".env"
 });
 
-createConnection()
+createConnection().then( () => console.log("📜️ Database connection is ready!"))
 const app = express();
 
 app.use(express.json());

@@ -15,13 +15,11 @@ import { User } from "../models/User";
 class Pdf {
   @PrimaryGeneratedColumn("uuid")
   id: string;
-
-  @Column("uuid")
-  user_id: string;
-
+  
   @ManyToOne( () => User)
   @JoinColumn({ name: "user_id" })
-  user: User;
+  @Column() 
+  user_id: String;
 
   @Column()
   name: string;
@@ -37,7 +35,7 @@ class Pdf {
   
   @BeforeInsert()
   hashId() {
-    this.id = uuid()
+    this.id = uuid();
   };
 }
 
