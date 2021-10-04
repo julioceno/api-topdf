@@ -25,7 +25,8 @@ class PdfController {
 
       const pdf = pdfRepository.create({
         name,
-        pdf_url: ""
+        pdf_url: "",
+        user_id
       });
 
       await pdfRepository.save(pdf)

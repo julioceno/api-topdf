@@ -14,7 +14,7 @@ const transport = nodemailer.createTransport({
 transport.use("compile", hbs({
   viewEngine: {
     defaultLayout: undefined,
-    partialsDir: path.resolve(".src/views/emails/"),
+    partialsDir: path.resolve("./src/views/emails/"),
   },
   viewPath: path.resolve("./src/views/emails/"),
   extName: ".hbs",

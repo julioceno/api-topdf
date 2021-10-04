@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1631624360631" clover="3.2.0">
-  <project timestamp="1631624360632" name="All files">
-    <metrics statements="628" coveredstatements="487" conditionals="71" coveredconditionals="62" methods="23" coveredmethods="17" elements="722" coveredelements="566" complexity="0" loc="628" ncloc="628" packages="10" files="16" classes="16"/>
+<coverage generated="1633384836361" clover="3.2.0">
+  <project timestamp="1633384836361" name="All files">
+    <metrics statements="632" coveredstatements="487" conditionals="71" coveredconditionals="62" methods="23" coveredmethods="17" elements="726" coveredelements="566" complexity="0" loc="632" ncloc="632" packages="10" files="16" classes="16"/>
     <package name="src">
       <metrics statements="17" coveredstatements="17" conditionals="2" coveredconditionals="1" methods="0" coveredmethods="0"/>
       <file name="app.ts" path="/home/julioceno/Documentos/programming/projects/api-topdf/src/app.ts">
@@ -26,9 +26,9 @@
       </file>
     </package>
     <package name="src.app.controllers">
-      <metrics statements="312" coveredstatements="223" conditionals="41" coveredconditionals="40" methods="13" coveredmethods="10"/>
+      <metrics statements="316" coveredstatements="223" conditionals="41" coveredconditionals="40" methods="13" coveredmethods="10"/>
       <file name="AppController.ts" path="/home/julioceno/Documentos/programming/projects/api-topdf/src/app/controllers/AppController.ts">
-        <metrics statements="28" coveredstatements="17" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="2"/>
+        <metrics statements="31" coveredstatements="17" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -54,9 +54,12 @@
         <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="27" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
       </file>
       <file name="AuthController.ts" path="/home/julioceno/Documentos/programming/projects/api-topdf/src/app/controllers/AuthController.ts">
         <metrics statements="132" coveredstatements="84" conditionals="12" coveredconditionals="11" methods="4" coveredmethods="3"/>
@@ -194,7 +197,7 @@
         <line num="132" count="1" type="stmt"/>
       </file>
       <file name="PdfController.ts" path="/home/julioceno/Documentos/programming/projects/api-topdf/src/app/controllers/PdfController.ts">
-        <metrics statements="41" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="1"/>
+        <metrics statements="42" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -233,9 +236,10 @@
         <line num="36" count="0" type="stmt"/>
         <line num="37" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
       </file>
       <file name="UserController.ts" path="/home/julioceno/Documentos/programming/projects/api-topdf/src/app/controllers/UserController.ts">
         <metrics statements="111" coveredstatements="111" conditionals="24" coveredconditionals="24" methods="4" coveredmethods="4"/>
@@ -438,9 +442,9 @@
         <line num="17" count="3" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
-        <line num="20" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="21" count="3" type="stmt"/>
-        <line num="22" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="22" count="3" type="stmt"/>
         <line num="23" count="3" type="stmt"/>
         <line num="24" count="3" type="stmt"/>
         <line num="25" count="3" type="stmt"/>
@@ -460,7 +464,7 @@
         <line num="39" count="3" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
         <line num="41" count="3" type="stmt"/>
-        <line num="42" count="3" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
       </file>

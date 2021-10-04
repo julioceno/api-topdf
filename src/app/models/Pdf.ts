@@ -9,17 +9,19 @@ import {
   JoinColumn
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-import { User } from "../models/User";
+import { User } from "./User";
 
 @Entity("pdfs")
 class Pdf {
   @PrimaryGeneratedColumn("uuid")
   id: string;
-  
-  @ManyToOne( () => User)
-  @JoinColumn({ name: "user_id" })
-  @Column() 
-  user_id: String;
+
+  @JoinColumn({ name: "user_id" }) 
+  @ManyToOne(() => User)
+  user: User;
+
+  @Column()
+  user_id: string;
 
   @Column()
   name: string;
@@ -37,6 +39,6 @@ class Pdf {
   hashId() {
     this.id = uuid();
   };
-}
+};
 
 export { Pdf };

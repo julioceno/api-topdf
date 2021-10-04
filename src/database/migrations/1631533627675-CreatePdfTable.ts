@@ -11,7 +11,6 @@ export class CreatePdfTable1631533627675 implements MigrationInterface {
                         name: 'id',
                         type: 'varchar',
                         isPrimary: true,
-                        generationStrategy: 'uuid',
                     },
                     {
                         name: 'user_id',
