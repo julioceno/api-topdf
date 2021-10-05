@@ -86,17 +86,33 @@ class UserController {
     const userRepository = getCustomRepository(UserRepository);
 
     try {
+      console.log(1)
+
       const user = await userRepository.findOne({ where: { id: req.userId } });
+
+      console.log(user)
+
+      if (!user) {
+        return res.status(409).json({ message: "User not exists" });
+      };
 
       if (!password_confirmation) {
         return res.status(400).json({ error: "Invalid password confirmation" });
       };
 
+      console.log(2)
+
+      console.log(password_confirmation)
+      console.log(user.password)
+
       const isValidPassword = await bcrypt.compare(password_confirmation, user.password);
+      console.log(3)
 
       if (!isValidPassword) {
         return res.status(400).json({ error: "Invalid password" });
       };
+
+      console.log(4)
 
       await userRepository.delete(user.id)
 

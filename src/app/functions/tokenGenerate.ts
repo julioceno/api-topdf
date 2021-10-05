@@ -7,7 +7,14 @@ interface TokenGenerateProps {
 };
 
 function tokenGenerate(params: TokenGenerateProps) {
-  const token =  jwt.sign(params.id, process.env.SECRET || "");
+
+  const secret = process.env.SECRET
+
+  const token =  jwt.sign( 
+    { id: params.id }, 
+    secret,
+    
+  );
   return token;
 };
 

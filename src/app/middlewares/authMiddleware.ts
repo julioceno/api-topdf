@@ -25,8 +25,11 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   };
 
   try {
-    const id = jwt.verify(token, process.env.SECRET || "");
-    req.userId = String(id);
+    const secret = process.env.SECRET 
+
+    const payload = jwt.verify(token, secret) as TokenPayload;
+    console.log("Insert id in request: ", payload.id)
+    req.userId = String(payload.id);
 
     return next()
   } catch {
