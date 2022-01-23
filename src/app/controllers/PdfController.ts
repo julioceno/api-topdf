@@ -8,8 +8,9 @@ import { pdfGenerate } from '../functions/pdfGenerate';
 
 class PdfController {
   async store(req: Request, res: Response) {
-    const { user_id } = req.params;
-    const { name, text } = req.body;
+    const { userId } = req;
+
+    const { name } = req.body;
 
     const userRepository = getCustomRepository(UserRepository);
     const pdfRepository = getCustomRepository(PdfRepository);
@@ -17,7 +18,7 @@ class PdfController {
     console.log(req.file);
 
     try {
-      const user = await userRepository.findOne({ id: user_id });
+      const user = await userRepository.findOne({ id: userId });
 
       if (!user) {
         return res.status(400).json({ error: 'User not found' });
@@ -34,7 +35,7 @@ class PdfController {
       const pdfCreated = pdfRepository.create({
         name: pdf.name,
         pdf_url: pdf.pdfurl,
-        user_id,
+        user_id: userId,
       });
 
       await pdfRepository.save(pdfCreated);
@@ -43,6 +44,38 @@ class PdfController {
     } catch (err) {
       console.log(err);
       return res.status(400).json({ message: 'Created pdf failed' });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    const { userId } = req;
+    const { pdf_id } = req.params;
+
+    const userRepository = getCustomRepository(UserRepository);
+    const pdfRepository = getCustomRepository(PdfRepository);
+
+    try {
+      const user = await userRepository.findOne({ id: userId });
+
+      if (!user) {
+        return res.status(400).json({ error: 'User not found' });
+      }
+
+      if (!pdf_id) {
+        return res.status(400).json({ error: 'Id pdf not specified' });
+      }
+
+      const pdfExists = await pdfRepository.findOne(pdf_id);
+
+      if (!pdfExists) {
+        return res.status(400).json({ error: 'Pdf not exists' });
+      }
+
+      await pdfRepository.delete(pdf_id);
+
+      return res.status(200).json({ message: 'Pdf deleted' });
+    } catch (err) {
+      return res.status(400).json({ error: 'Delete failed' });
     }
   }
 }
