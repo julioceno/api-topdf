@@ -12,3 +12,9 @@ tmp/uploads/documents/*
 
 tmp/uploads/images/*
 !tmp/uploads/images/.gitkeep
+
+tmp/uploads/pdfs/*
+!tmp/uploads/pdfs/.gitkeep
+
+tmp/uploads/files/*
+!tmp/uploads/files/.gitkeep
