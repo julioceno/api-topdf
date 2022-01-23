@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.32% </span>
+                <span class="strong">25.53% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/57</span>
+                <span class='fraction'>12/47</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.32% </span>
+                <span class="strong">25.53% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/57</span>
+                <span class='fraction'>12/47</span>
             </div>
         
             
@@ -104,18 +104,7 @@
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -160,19 +149,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from 'express';
-import { getCustomRepository } from "typeorm";
-import fs from "fs";
-import sizeOf from "image-size";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response } from 'express';
+import { getCustomRepository } from 'typeorm';
 &nbsp;
 import { UserRepository } from '../repositories/UserRepository';
 import { PdfRepository } from '../repositories/PdfRepository';
@@ -183,56 +163,49 @@ class PdfController {
 <span class="fstat-no" title="function not covered" >  async store(req: Request, res: Response) {</span>
 <span class="cstat-no" title="statement not covered" >    const { user_id } = req.params;</span>
 <span class="cstat-no" title="statement not covered" >    const { name, text } = req.body;</span>
-<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    const userRepository = getCustomRepository(UserRepository);</span>
 <span class="cstat-no" title="statement not covered" >    const pdfRepository = getCustomRepository(PdfRepository);</span>
-<span class="cstat-no" title="statement not covered" >    </span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      const user = await userRepository.findOne({ id: user_id });</span>
-<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      if (!user) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: "User not found" });</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: 'User not found' });</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      if (!name) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: "Name is null" });</span>
-<span class="cstat-no" title="statement not covered" >      };</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ error: 'Name is null' });</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      const file = req.file</span>
+<span class="cstat-no" title="statement not covered" >      const file = req.file;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      const encoded = req.file.buffer.toString('base64')</span>
+<span class="cstat-no" title="statement not covered" >      const pdf = pdfGenerate({ name, file });</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      sizeOf(`${req.file}`, function(err, dimensions) {</span>
-<span class="cstat-no" title="statement not covered" >        console.log(dimensions.width, dimensions.height);</span>
-<span class="cstat-no" title="statement not covered" >      })</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      </span>
-<span class="cstat-no" title="statement not covered" >      // pdfGenerate({ name, file });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      const pdf = pdfRepository.create({</span>
-<span class="cstat-no" title="statement not covered" >        name: "a",</span>
-<span class="cstat-no" title="statement not covered" >        pdf_url: "",</span>
-<span class="cstat-no" title="statement not covered" >        user_id</span>
+<span class="cstat-no" title="statement not covered" >      const pdfCreated = pdfRepository.create({</span>
+<span class="cstat-no" title="statement not covered" >        name: pdf.fileName,</span>
+<span class="cstat-no" title="statement not covered" >        pdf_url: pdf.pdfurl,</span>
+<span class="cstat-no" title="statement not covered" >        user_id,</span>
 <span class="cstat-no" title="statement not covered" >      });</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      await pdfRepository.save(pdf)</span>
+<span class="cstat-no" title="statement not covered" >      await pdfRepository.save(pdfCreated);</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      return res.status(201).json({ message: "created" });</span>
-<span class="cstat-no" title="statement not covered" >    } catch(err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(err)</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: "Created pdf failed" });</span>
-<span class="cstat-no" title="statement not covered" >    };</span>
-<span class="cstat-no" title="statement not covered" >  };</span>
-&nbsp;
+<span class="cstat-no" title="statement not covered" >      return res.status(201).json({ message: 'created' });</span>
+<span class="cstat-no" title="statement not covered" >    } catch (err) {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(err);</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(400).json({ message: 'Created pdf failed' });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >  }</span>
 }
-export { PdfController };</pre></td></tr></table></pre>
+export { PdfController };
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Oct 30 2021 17:02:11 GMT-0300 (Horário Padrão de Brasília)
+                at Sun Jan 23 2022 16:07:43 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

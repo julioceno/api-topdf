@@ -21,13 +21,14 @@ interface PdfGeneratePros {
 }
 
 function pdfGenerate({ name, file }: PdfGeneratePros) {
-  if (allowedWordMimes.includes(file.mimetype)) {
-    const fileName = `${uuid()}-${name.replace(/ /g, '-')}.pdf`;
-    const pdfurl = `./tmp/uploads/pdfs/${fileName}`;
+  const fileNameUrl = `${name.replace(/ /g, '-')}.pdf`;
+  const pdfurl = `./tmp/uploads/pdfs/${fileNameUrl}`;
 
+  if (allowedWordMimes.includes(file.mimetype)) {
     docxConverter(file.path, pdfurl, function (err: any, result: any) {
       if (err) {
-        return console.log(err);
+        console.log(err);
+        return err;
       }
     });
 
@@ -40,9 +41,6 @@ function pdfGenerate({ name, file }: PdfGeneratePros) {
       size: [dimensions.height, dimensions.width],
     });
 
-    const fileName = `${uuid()}-${name.replace(/ /g, '-')}.pdf`;
-
-    const pdfurl = `./tmp/uploads/pdfs/${fileName}`;
     doc.pipe(fs.createWriteStream(pdfurl));
 
     doc.image(file.path, 0, 0, {
@@ -54,6 +52,11 @@ function pdfGenerate({ name, file }: PdfGeneratePros) {
 
     fs.unlinkSync(file.path);
   }
+
+  return {
+    name,
+    pdfurl,
+  };
 }
 
 export { pdfGenerate };

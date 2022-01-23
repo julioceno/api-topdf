@@ -1,11 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate, CreateDateColumn, UpdateDateColumn  } from "typeorm";
-import { v4 as uuid } from "uuid";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
 
-@Entity("users")
+@Entity('users')
 class User {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -23,19 +31,19 @@ class User {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn() 
+  @UpdateDateColumn()
   updated_at: Date;
 
   @BeforeInsert()
   @BeforeUpdate()
   hashPassword() {
-    this.password = bcrypt.hashSync(this.password, 8)
-  };
-  
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
+
   @BeforeInsert()
   hashId() {
-    this.id = uuid()
-  };
+    this.id = uuid();
+  }
 }
 
 export { User };

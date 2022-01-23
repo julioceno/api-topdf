@@ -1,22 +1,22 @@
-import { 
-  Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
-  BeforeInsert, 
-  CreateDateColumn, 
-  UpdateDateColumn, 
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  CreateDateColumn,
+  UpdateDateColumn,
   ManyToOne,
-  JoinColumn
-} from "typeorm";
-import { v4 as uuid } from "uuid";
-import { User } from "./User";
+  JoinColumn,
+} from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import { User } from './User';
 
-@Entity("pdfs")
+@Entity('pdfs')
 class Pdf {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @JoinColumn({ name: "user_id" }) 
+  @JoinColumn({ name: 'user_id' })
   @ManyToOne(() => User)
   user: User;
 
@@ -32,13 +32,13 @@ class Pdf {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn() 
+  @UpdateDateColumn()
   updated_at: Date;
-  
+
   @BeforeInsert()
   hashId() {
     this.id = uuid();
-  };
-};
+  }
+}
 
 export { Pdf };
