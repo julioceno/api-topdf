@@ -6,3 +6,9 @@ yarn-error.log
 .env.test
 
 ./src/database/database.test.sqlite
+
+tmp/uploads/documents/*
+!tmp/uploads/documents/.gitkeep
+
+tmp/uploads/images/*
+!tmp/uploads/images/.gitkeep

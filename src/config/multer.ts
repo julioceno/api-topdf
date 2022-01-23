@@ -1,50 +1,51 @@
-import multer, { Multer } from "multer";
+import { Request } from "express";
+import multer from "multer";
 import path from "path";
-import crypto from "crypto";
-import aws from "aws-sdk";
-import multerS3 from "multer-s3";
 
-interface StorageTypesProps {
-  local: any,
+import { v4 as uuid } from "uuid";
 
-  s3: any,
+import { allowedAllMimes } from "../app/utils/allowedMimes";
+
+interface FileProps {
+  fieldname: string,
+  originalname: string,
+  encoding: string,
+  mimetype: string
 }
 
-const storageTypes: StorageTypesProps = {
+
+const storageTypes = {
   local: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, path.resolve(__dirname, "..", "..", "tmp", "uploads"))
+      cb(null, path.resolve(__dirname, '..', '..', 'tmp', 'uploads', 'files'))
+    }, 
+    filename: (req: Request, file: FileProps, cb: Function) => {
+      const name = `${uuid()}-${file.originalname}`
+      cb(null, name);
     },
-    filename: (req, file: any, cb) => {
-      crypto.randomBytes(16, (err, hash) => {
-        if (err) return cb(err, null);
-
-        file.key = `${hash.toString("hex")}-${file.originalname}`;
-
-        cb(null, file.key);
-      });
-    }
   }),
+  
+  s3: ""
+}
 
-  s3: multerS3({
-    s3: new aws.S3(),
-    bucket: "upload_pdf",
-    contentType: multerS3.AUTO_CONTENT_TYPE,
-    acl: "public-read",
-    key: (req, file, cb) => {
-      crypto.randomBytes(16, (err, hash) => {
-        if (err) cb(err)
+interface typeProps {
+  local: string,
+  s3: string
+}
 
-        const fileName = `${hash.toString("hex")}-${file.originalname}`
-        
-        cb(null, fileName)
-    })
-    }
-  })
+
+function multerConfig() {
+  return {
+    dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads', 'files'),
+    storage: storageTypes["local"],
+    fileFilter: (req: Request, file: FileProps, cb: Function) => {
+      if (allowedAllMimes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error("Invalid file type"));
+      }
+    },
+  };
 };
 
-module.exports = {
-  dest: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'), 
-
-  storage: storageTypes.local,
-}
+export { multerConfig };

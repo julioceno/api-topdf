@@ -13,7 +13,9 @@ function tokenGenerate(params: TokenGenerateProps) {
   const token =  jwt.sign( 
     { id: params.id }, 
     secret,
-    
+    {
+      expiresIn: "1d"
+    }
   );
   return token;
 };

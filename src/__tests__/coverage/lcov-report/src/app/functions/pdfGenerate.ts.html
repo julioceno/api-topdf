@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/config/multer.ts</title>
+    <title>Code coverage report for src/app/functions/pdfGenerate.ts</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/config</a> multer.ts</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/app/functions</a> pdfGenerate.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/38</span>
+                <span class='fraction'>0/35</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/38</span>
+                <span class='fraction'>0/35</span>
             </div>
         
             
@@ -91,10 +91,7 @@
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -128,47 +125,41 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { Request } from "express";</span></span></span>
-<span class="cstat-no" title="statement not covered" >import multer from "multer";</span>
-<span class="cstat-no" title="statement not covered" >import crypto from "crypto";</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import { layout } from "pdfkit/js/page";</span></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >interface FileProps {</span>
-<span class="cstat-no" title="statement not covered" >  fieldname: string,</span>
-<span class="cstat-no" title="statement not covered" >  originalname: string,</span>
-<span class="cstat-no" title="statement not covered" >  encoding: string,</span>
-<span class="cstat-no" title="statement not covered" >  mimetype: string</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" >const fs = require("fs");</span>
+<span class="cstat-no" title="statement not covered" >const PDFDocument = require('pdfkit');</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >function multerConfig() {</span>
-<span class="cstat-no" title="statement not covered" >  return {</span>
-<span class="cstat-no" title="statement not covered" >    storage: multer.diskStorage({</span>
-<span class="cstat-no" title="statement not covered" >      filename: (req: Request, file: FileProps, cb: Function) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        cb(null, file.originalname);</span>
-<span class="cstat-no" title="statement not covered" >      },</span>
-<span class="cstat-no" title="statement not covered" >    }),</span>
-<span class="cstat-no" title="statement not covered" >    fileFilter: (req: Request, file: FileProps, cb: Function) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      </span>
-<span class="cstat-no" title="statement not covered" >      const allowedMimes = [</span>
-<span class="cstat-no" title="statement not covered" >        "image/jpeg",</span>
-<span class="cstat-no" title="statement not covered" >        "image/pjpeg",</span>
-<span class="cstat-no" title="statement not covered" >        "image/png",</span>
-<span class="cstat-no" title="statement not covered" >        "application/msword",</span>
-<span class="cstat-no" title="statement not covered" >        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",</span>
-<span class="cstat-no" title="statement not covered" >      ]</span>
-<span class="cstat-no" title="statement not covered" >  </span>
-<span class="cstat-no" title="statement not covered" >      if (allowedMimes.includes(file.mimetype)) {</span>
-<span class="cstat-no" title="statement not covered" >        cb(null, true);</span>
-<span class="cstat-no" title="statement not covered" >      } else {</span>
-<span class="cstat-no" title="statement not covered" >        cb(new Error("Invalid file type"));</span>
-<span class="cstat-no" title="statement not covered" >      }</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >interface PdfGeneratePros {</span>
+<span class="cstat-no" title="statement not covered" >  name: string;</span>
+<span class="cstat-no" title="statement not covered" >  file: {</span>
+<span class="cstat-no" title="statement not covered" >    fieldname: string;</span>
+<span class="cstat-no" title="statement not covered" >    originalname:string;</span>
+<span class="cstat-no" title="statement not covered" >    encoding: string;</span>
+<span class="cstat-no" title="statement not covered" >    mimetype: string;</span>
+<span class="cstat-no" title="statement not covered" >    destination: string;</span>
+<span class="cstat-no" title="statement not covered" >    filename: string;</span>
+<span class="cstat-no" title="statement not covered" >    path: string;</span>
+<span class="cstat-no" title="statement not covered" >    size: number;</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
 <span class="cstat-no" title="statement not covered" >};</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >export { multerConfig };</span></pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >export function pdfGenerate({ name, file }: PdfGeneratePros) {</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const doc = new PDFDocument({</span>
+<span class="cstat-no" title="statement not covered" >    layout: "landscape",</span>
+<span class="cstat-no" title="statement not covered" >    size: "a4"</span>
+<span class="cstat-no" title="statement not covered" >  });</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const pdfurl = `./tmp/uploads/${new Date().getTime()}_${name.replace(/ /g, "_")}.pdf`</span>
+<span class="cstat-no" title="statement not covered" >  doc.pipe( fs.createWriteStream(pdfurl) );</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      </span>
+<span class="cstat-no" title="statement not covered" >  doc.image('image.png', 10, 10, { width: 825 });</span>
+<span class="cstat-no" title="statement not covered" >  </span>
+<span class="cstat-no" title="statement not covered" >  doc.end();</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >}</span></pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
@@ -178,14 +169,14 @@
                 at Sat Oct 30 2021 17:02:11 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
-        <script src="../../prettify.js"></script>
+        <script src="../../../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
     </body>
 </html>
     

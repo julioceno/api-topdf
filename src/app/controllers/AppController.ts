@@ -13,11 +13,10 @@ class AppController {
 
   async create_pdf(req: Request, res: Response) {
     try {
-      /*     const pdf = doc.image(__dirname + "/../images/image.png", 0, 15, {width: 300})
+      const pdf = doc.image(__dirname + "/../pdfs/image.png", 0, 15, {width: 300})
       .text('Proportional to width', 0, 0);
   
-      console.log(pdf)
-      return res.status(200).json({ message: "pdf ready" }); */
+      return res.status(200).json({ message: "pdf ready" });
 
       
 

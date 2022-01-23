@@ -28,7 +28,6 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const secret = process.env.SECRET 
 
     const payload = jwt.verify(token, secret) as TokenPayload;
-    console.log("Insert id in request: ", payload.id)
     req.userId = String(payload.id);
 
     return next()
